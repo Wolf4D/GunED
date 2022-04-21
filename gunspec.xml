@@ -1,0 +1,1668 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+<tab tabName="Main">
+	<record recName="Damage"> 
+		<type>int</type>
+		<default>10</default>
+		<minvalue>0</minvalue>
+		<maxvalue>10000</maxvalue>
+		<hasAlt>true</hasAlt>
+		<persistent>true</persistent>
+		<comment>The damage that the bullets cause. May be overriden in editor.</comment>
+		<cmd>damage</cmd>
+	</record>
+	<record recName="Damage type"> 
+		<type>int</type>
+		<default>1</default>
+		<minvalue>0</minvalue>
+		<maxvalue>2</maxvalue>
+		<hasAlt>true</hasAlt>
+		<persistent>true</persistent>
+		<comment>This defines the type of damage the bullets or weapon delivers.
+		0 - explosion (grenades, rpgs, etc).
+		1 - bullet shot (pistoles, rifles).
+		2 - shotgun/spread shot.
+		Type 2 delivers more physical punch and uses cone for finding damage points. May inflict increased damage in practice.</comment>
+		<cmd>damagetype</cmd>
+	</record>
+	<record recName="Accuracy"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<persistent>true</persistent>
+		<comment>This defines the accuracy of the gun's bullets. More is worse. May be overriden in editor.</comment>
+		<cmd>accuracy</cmd>
+	</record>
+	<record recName="Accuracy while running"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>This defines the accuracy of the weapon while running. The lower the number, the higher the accuracy</comment>
+		<cmd>runacc</cmd>
+	</record>
+	<record recName="Fire rate"> 
+		<type>int</type>
+		<default>12</default>
+		<minvalue>1</minvalue>
+		<maxvalue>1000</maxvalue>
+		<hasAlt>true</hasAlt>
+		<comment>Sets the number of loops between shots on automatic weapons to X divided by 2. Set to 1 for the muzzle flash light to remain ON.</comment>
+		<cmd>firerate</cmd>
+	</record>
+	<record recName="Range"> 
+		<type>int</type>
+		<default>1000</default>
+		<minvalue>0</minvalue>
+		<maxvalue>999999</maxvalue>
+		<hasAlt>true</hasAlt>
+		<comment>The range of the weapon's bullets. The default value is 1000 units.</comment>
+		<cmd>range</cmd>
+	</record>
+	<record recName="Rounds to fire per one shot"> 
+		<type>int</type>
+		<default>1</default>
+		<enabled>false</enabled>
+		<minvalue>1</minvalue>
+		<maxvalue>300</maxvalue>
+		<comment>This defines the number of rounds to fire in a single shot. For example, one mouse click may result 3 shots in a row. This only works on automatic weapons.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>burst</cmd>
+	</record>
+	<record recName="Bullets firing per shot"> 
+		<type>int</type>
+		<default>1</default>
+		<minvalue>1</minvalue>
+		<maxvalue>1000</maxvalue>
+		<hasAlt>true</hasAlt>
+		<persistent>true</persistent>
+		<comment>The number of bullets that should be shot in one firing. For example, one shot of shotgun may contain 11 bullets.</comment>
+		<cmd>iterate</cmd>
+	</record>
+	<record recName="Clip size"> 
+		<type>int</type>
+		<minvalue>0</minvalue>
+		<maxvalue>1000</maxvalue>
+		<default>10</default>
+		<comment>This defines the number of rounds per clip.</comment>
+		<persistent>true</persistent>
+		<hasAlt>true</hasAlt>
+		<cmd>reloadqty</cmd>
+	</record>
+	<record recName="Weapon is ammo"> 
+		<type>bool</type>
+		<default>false</default>
+		<comment> This defines the weapons as being its own ammo. Used for grenades.</comment>
+		<enabled>false</enabled>
+		<cmd>weaponisammo</cmd>
+	</record>
+</tab>
+<tab tabName="Projectile">
+	<record recName="Flak name"> 
+		<type>text</type>
+		<default> Any valid flak name</default>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>This defines the flak model to use when the weapon is fired (see flakspec command list for further details regarding flak).</comment>
+		<cmd>flak</cmd>
+	</record>
+	<record recName="Particle decal"> 
+		<type>text</type>
+		<default> Any valid decal name</default>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>This defines what particle decal is used when the weapon is fired. The particle moves with the projectile.</comment>
+		<cmd>particledecal</cmd>
+	</record>
+	<record recName="Particle animation speed"> 
+		<type>int</type>
+		<default>0</default>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>This defines the speed at which the particle animation is played.</comment>
+		<cmd>particlespeed</cmd>
+	</record>	
+</tab>
+<tab tabName="Reload">
+	<record recName="Ammo pool"> 
+		<type>text</type>
+		<default>Path to ammo's fpe file</default>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>This enables weapons using the same ammo type to share ammo between them. Sharing is done by providing the same ammo *.fpe file for all the guns sharing that ammo.</comment>
+		<cmd>poolammo</cmd>
+	</record>
+	<record recName="Round in chamber"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>If set to true, the player will be able to reload the weapon if it is full in order to receive one extra round.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>chamberedround</cmd>
+	</record>
+	<record recName="Shotgun-style reloading"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>If true then performs uses reload start, reload loop, and reload end animations.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>shotgun</cmd>
+	</record>
+	<record recName="Zoom out on reload"> 
+		<type>bool</type>
+		<default>true</default>
+		<enabled>false</enabled>
+		<comment>If set to false then scoped weapons won't zoom out when reloading</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>forcezoomout</cmd>
+	</record>
+	<record recName="Deny full reloading"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>If set to true, the player will not be able to reload when the weapon is full.
+NOTE: If Chambered Round = true, they will still be able to reload with full ammo to obtain 1 extra round. They will not be able to reload if they already have the additional round.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>nofullreload</cmd>
+	</record>
+	<record recName="Empty reload only"> 
+		<type>bool</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<comment>If set to true, the weapon can only be reloaded if it is empty.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>emptyreloadonly</cmd>
+	</record>
+	<record recName="Reload on new ammo"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>This defines whether collected ammo is added directly into the clip or not if the weapon is empty.</comment>
+		<cmd>addtospare</cmd>
+	</record>
+	<record recName="Deny auto reloading"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>This defines whether the gun will automatically reload when empty or not. Weapons auto reloads by default.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>noautoreload</cmd>
+	</record>
+	<record recName="Overheat after"> 
+		<type>int</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The number of shots fired before the chance of jamming becomes active.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>overheatafter</cmd>
+	</record>
+	<record recName="Cooldown time (ms)"> 
+		<type>int</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<comment>The time in milliseconds from the last time the gun was fired that is needed to completely clear the current jam. Firing the weapon before the cool down duration has expired will reset the timer.</comment>
+		<minvalue>0</minvalue>
+		<maxvalue>10000</maxvalue>
+		<hasAlt>true</hasAlt>
+		<cmd>cooldown</cmd>
+	</record>
+	<record recName="Chance of jamming"> 
+		<type>int</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The chance of the gun jamming each time it is fired once over heated. 
+		The "Overheat after" setting must also be used. 
+		Reloading automatically resets gun jam. 
+		Value 0 is never, value 100 is always.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>jamchance</cmd>
+	</record>
+</tab>
+<tab tabName="Zoom">
+	<record recName="Use ironsights"> 
+		<type>bool</type>
+		<default>true</default>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>This sets the gun up to use either ironsights or the scope HUD when in zoom mode. To use ironsights, Ironsight Magnification (SIMPLEZOOM) must be set to 1</comment>
+		<cmd>zoommode</cmd>
+	</record>
+	<record recName="Ironsight magnification"> 
+		<type>int</type>
+		<default>1</default>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>Used for ironsights when Use ironsights (ZOOMMODE) is set. Defines the amount that the player should zoom in when pressing right click.</comment>
+		<cmd>simplezoom</cmd>
+	</record>
+	<record recName="Ironsights accuracy"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>This defines the accuracy of the weapon when in simple zoom, or ironsights. The lower the number, the higher the accuracy</comment>
+		<cmd>simplezoomacc</cmd>
+	</record>
+	<record recName="Zoomed wobbling"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>This defines how much the camera moves around when in zoomed mode. Setting to zero means no movement.</comment>
+		<cmd>zoomaccuracy</cmd>
+	</record>
+	<record recName="Zoom HUD image"> 
+		<type>text</type>
+		<default>Path to image</default>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment> This defines the full-screen HUD image to be used when in full scope zoom</comment>
+		<cmd>zoomscope</cmd>
+	</record>
+	<record recName="Zoom walk speed"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The modifier for the player's walk speed while zoomed. Higher values mean the player will move slower.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>zoomwalkspeed</cmd>
+	</record>
+	<record recName="Zoom turn speed"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The modifier for the player's looking speed while zoomed. Higher values mean the player will look around slower.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>zoomturnspeed</cmd>
+	</record>
+</tab>
+<tab tabName="Recoil">
+	<record recName="Vertical recoil"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The amount of recoil on the vertical (or Y) axis (randomly selects up or down).</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>recoily</cmd>
+	</record>
+	<record recName="Horizontal recoil"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The amount of recoil on the horizontal (or X) axis (randomly selects left or right).</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>recoilx</cmd>
+	</record>
+	<record recName="Vertical recoil return %"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The percentage of the recoil that should be compensated for on the Y axis.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>recoilyreturn</cmd>
+	</record>
+	<record recName="Horizontal recoil return %"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The percentage of the recoil that should be compensated for on the X axis.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>recoilxreturn</cmd>
+	</record>
+	<record recName="Vertical recoil (zoomed)"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The amount of recoil on the vertical (or Y) axis (randomly selects up or down).</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoomrecoily</cmd>
+	</record>
+	<record recName="Horizontal recoil (zoomed)"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The amount of recoil on the horizontal (or X) axis (randomly selects left or right).</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoomrecoilx</cmd>
+	</record>
+	<record recName="Vertical recoil return % (zoomed)"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The percentage of the recoil that should be compensated for on the Y axis.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoomrecoilyreturn</cmd>
+	</record>
+	<record recName="Horizontal recoil return % (zoomed)"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The percentage of the recoil that should be compensated for on the X axis.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoomrecoilxreturn</cmd>
+	</record>
+</tab>
+<tab tabName="Melee 'n Alt">
+	<record recName="Melee damage"> 
+		<type>int</type>
+		<default>10</default>
+		<minvalue>1</minvalue>
+		<maxvalue>1000</maxvalue>
+		<enabled>false</enabled>
+		<comment> This defines the amount of damage the melee attack does. 
+		There are some recommendations about values from 100 to 120 for a powerful strike</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>melee damage</cmd>
+	</record>
+	<record recName="Melee keycode"> 
+		<type>int</type>
+		<default>45</default>
+		<enabled>false</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>255</maxvalue>
+		<comment>This defines what key code activates the melee attack. For example, X is 45.</comment>
+		<cmd>melee key</cmd>
+	</record>
+	<record recName="Melee range"> 
+		<type>int</type>
+		<default>60</default>
+		<enabled>false</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>10000</maxvalue>
+		<comment>This defines the range at which the melee attack can cause damage in units. Setting this value between 50 and 60 is recommended.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>melee range</cmd>
+	</record>
+	<record recName="Alt-fire keycode"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the key code (or key codes) needed to activate the alternative firing mode. 
+		A second key code can be declared to allow key-combos (such as “ALT +F”) to perform the switch. 
+		If the second key code is not declared, the first key code is used to switch between the firing modes. If nothing is declared, the default switch key is the number of the gun selected.</comment>
+		<cmd>switchtoalt</cmd>
+	</record>
+	<record recName="Alternate is flak"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>This defines whether the weapon's alternative fire mode is a flak type.</comment>
+		<cmd>alternateisflak</cmd>
+	</record>
+	<record recName="Alternate is raycast"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>This defines whether the weapon's alternative fire is a bullet (ray cast) type.</comment>
+		<cmd>alternateisray</cmd>
+	</record>
+</tab>
+<tab tabName="Misc">
+	<record recName="Deny shooting while running"> 
+		<type>bool</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<comment> If set to true, this disables the ability for the player to shoot while running.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>disablerunandshoot</cmd>
+	</record>
+	<record recName="Deny shooting under water"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment> If set to true, the player will not be able to fire the weapon when under water.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>nosubmergedfire</cmd>
+	</record>
+	<record recName="Is equipment"> 
+		<type>bool</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<comment>This defines the gun as a non-lethal equipment, rather than a weapon. Use this command when creating tools or other items that do no harm.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>equipment</cmd>
+	</record>
+	<record recName="Pause at equipment use"> 
+		<type>bool</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<comment>If the gun is set as an equipment and this is set to true, the player will be frozen/disabled for 100 ms when the equipment is activated.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>lockcamera</cmd>
+	</record>
+	<record recName="Is gravity gun"> 
+		<type>bool</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<comment>If set to true, the weapon acts as a gravity gun. Right mouse click picks up and drops objects, left mouse click throws a held object.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>gravitygun</cmd>
+	</record>
+	<record recName="Gravity gun strength"> 
+		<type>int</type>
+		<default>100</default>
+		<enabled>false</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>10000</maxvalue>
+		<comment>If gravity gun is set: This defines the physics weight the gravity gun will handle. Objects heavier than this value will not be picked up.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>gravitystrength</cmd>
+	</record>
+	<record recName="Is magnet gun"> 
+		<type>bool</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<comment>If set to true, the weapon acts as a magnet gun. Left mouse click drags objects towards the player.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>magnet</cmd>
+	</record>
+	<record recName="Magnet gun strength"> 
+		<type>int</type>
+		<default>100</default>
+		<enabled>false</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>10000</maxvalue>
+		<comment>If magnet gun is set: This defines the physics weight the magnet gun will handle. Objects heavier than this value will not be attracted to the player. .</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>magnetstrength</cmd>
+	</record>
+	<record recName="Bullet hide system"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>This defines whether the bullet hide system is used or not. Requires bullet's limbs to be named correctly (i.e. “BULLET1”).</comment>
+		<cmd>bullethidmod</cmd>
+	</record>
+	<record recName="Hidden bullet's back to 100% at frame"> 
+		<type>int</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>1000</maxvalue>
+		<comment>If hide system is used: defines the animation frame at which the bullets will all be scaled back to 100%.</comment>
+		<cmd>bullethidereset</cmd>
+	</record>
+	<record recName="Ammo used before hiding bullets"> 
+		<type>int</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>1000</maxvalue>
+		<comment>If hide system is used: defines the amount of ammo spent before the bullet hide system operates.</comment>
+		<cmd>bullethidestart</cmd>
+	</record>
+	<record recName="Number of bullet limbs"> 
+		<type>int</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>This defines the number of bullet limbs that the weapon has.</comment>
+		<cmd>bulletlimbtotal</cmd>
+	</record>
+	<record recName="Disable animation speed change in move"> 
+		<type>bool</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<comment>If set to true, this disables the animation speed change applied to the move animation while walking/running/crouching.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>disablemovespeedmod</cmd>
+	</record>
+</tab>
+<tab tabName="Visuals">
+	<record recName="Texture"> 
+		<type>text</type>
+		<default>Path to texture file</default>
+		<enabled>true</enabled>
+		<comment>This defines the texture to apply to the gun model. Leave blank to use the model's default texture</comment>
+		<cmd>textured</cmd>
+	</record>
+	<record recName="Shader effect"> 
+		<type>text</type>
+		<default>Path to effect file</default>
+		<enabled>true</enabled>
+		<comment>Defines the file path to the effect file to be applied to the weapon</comment>
+		<cmd>effect</cmd>
+	</record>	
+	<record recName="Transparency"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<enabled>false</enabled>
+		<comment>This defines the transparency of the gun, but how the value corresponds to the actual transparency varies depending on a number of factors such as the shader used..</comment>
+		<cmd>transparency</cmd>
+	</record>
+	<record recName="Brass type"> 
+		<type>int</type>
+		<default>1</default>
+		<enabled>true</enabled>
+		<comment>This defines what brass or used shell model will be projected from the gun in random directions when fired.
+		1 for pistol
+		2 for rifle
+		3 for shotgun</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>brass</cmd>
+	</record>
+	<record recName="Smoke type"> 
+		<type>int</type>
+		<default>1</default>
+		<minvalue>1</minvalue>
+		<maxvalue>2</maxvalue>
+		<enabled>true</enabled>
+		<comment>This defines the standard smoke decal that is used when the weapon is fired. If no smoke decal is defined, the default is set as 1.
+		1 is for grey smoke, 2 is for blue.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>smoke</cmd>
+	</record>
+	<record recName="Smoke decal"> 
+		<type>text</type>
+		<default>Path to decal</default>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>This defines the smoke decal that is used when the weapon is fired and overrides the smoke setting.</comment>
+		<cmd>smokedecal</cmd>
+	</record>
+	<record recName="Smoke speed"> 
+		<type>int</type>
+		<default>25</default>
+		<minvalue>0</minvalue>
+		<maxvalue>1000</maxvalue>
+		<enabled>false</enabled>
+		<comment>This defines the speed at which the smoke is animated. The default value is 25</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>smokespeed</cmd>
+	</record>
+	<record recName="Enemy weapon grip"> 
+		<type>int</type>
+		<default>3</default>
+		<minvalue>0</minvalue>
+		<maxvalue>5</maxvalue>
+		<persistent>true</persistent>
+		<comment>This defines how the character holds the weapon, what impact decal is applied and is limited to six variations:
+		0 is for grenades,
+		1 if for pistols
+		2 is for machine guns,
+		3 is for rifles,
+		4 is for miniguns,
+		5 is for RPGs</comment>
+		<cmd>weapontype</cmd>
+	</record>
+	<record recName="Forward model offset"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>true</enabled>
+		<comment>This positions the gun towards or away from the camera/player. Negative values position the gun closer to the camera</comment>
+		<cmd>forward</cmd>
+	</record>
+	<record recName="Horizontal model offset"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>true</enabled>
+		<comment>This positions the gun left or right from the default position in relation to the camera/player. Negative values position the gun left</comment>
+		<cmd>horiz</cmd>
+	</record>
+	<record recName="Vertical model offset"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>true</enabled>
+		<comment>This positions the gun up or down from the default position in relation to the camera/player. Negative values position the gun down.</comment>
+		<cmd>vert</cmd>
+	</record>
+	<record recName="Model rotation X"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-360</minvalue>
+		<maxvalue>360</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>true</enabled>
+		<comment>This defines the angle of the gun around the x-axis.</comment>
+		<cmd>rotx</cmd>
+	</record>
+	<record recName="Model rotation Y"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-360</minvalue>
+		<maxvalue>360</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>true</enabled>
+		<comment>This defines the angle of the gun around the y-axis.</comment>
+		<cmd>roty</cmd>
+	</record>
+	<record recName="Model rotation Z"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-360</minvalue>
+		<maxvalue>360</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>true</enabled>
+		<comment>This defines the angle of the gun around the z-axis.</comment>
+		<cmd>rotz</cmd>
+	</record>
+	<record recName="Gun inertia speed"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>The speed at which the gun should lag behind the camera movement. Higher values mean the gun moves slower and further.</comment>
+		<cmd>gunlagspeed</cmd>
+	</record>
+	<record recName="Gun inertia max X"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>The maximum amount the gun can lag behind on the X axis.</comment>
+		<cmd>gunlagxmax</cmd>
+	</record>
+	<record recName="Gun inertia max Y"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>The maximum amount the gun can lag behind on the Y axis.</comment>
+		<cmd>gunlagymax</cmd>
+	</record>
+		<record recName="Gun inertia speed (zoomed)"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>This defines how much the gun model lags behind the player while moving in ironsights zoom.</comment>
+		<cmd>zoomgunlagspeed</cmd>
+	</record>
+	<record recName="Gun inertia max X (zoomed)"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>The maximum amount the gun can lag behind on the X axis while moving in ironsights zoom.</comment>
+		<cmd>zoomgunlagxmax</cmd>
+	</record>
+	<record recName="Gun inertia max Y (zoomed)"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>The maximum amount the gun can lag behind on the Y axis while moving in ironsights zoom.</comment>
+		<cmd>zoomgunlagymax</cmd>
+	</record>
+	<record recName="Gun offset X while running"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>An X offset to use while running (holding shift and moving). NOTE: The weapon is smoothly transitioned to this position using SIMPLEZOOMSPEED.</comment>
+		<cmd>runx</cmd>
+	</record>
+		<record recName="Gun offset Y while running"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>An Y offset to use while running (holding shift and moving). NOTE: The weapon is smoothly transitioned to this position using SIMPLEZOOMSPEED.</comment>
+		<cmd>runy</cmd>
+	</record>
+	<record recName="Zoom-in model center offset"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>High values mean the weapon does not move backwards as much when the player zooms in. Negative values mean it moves forward. A value of zero means it does not move</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>simplezoommod</cmd>
+	</record>
+	<record recName="Zoom-in speed"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>The speed at which the weapon is smoothed to the X/Y values. Higher values mean it goes slower/smoother.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>simplezoomspeed</cmd>
+	</record>
+	<record recName="Zoom-in offset X"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>An X offset to use when in simple zoom. The weapon is smoothly transitioned to this position using Zoom-in Speed.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>simplezoomx</cmd>
+	</record>
+	<record recName="Zoom-in offset Y"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>An Y offset to use when in simple zoom. The weapon is smoothly transitioned to this position using Zoom-in Speed.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>simplezoomy</cmd>
+	</record>
+</tab>
+<tab tabName="Bulletholes">
+		<record recName="No bulletholes"> 
+		<type>bool</type>
+		<default>0</default>
+		<enabled>false</enabled>
+		<comment>If set to true, the weapon will not place a bullet hole on walls. Useful for melee weapons</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>noscorch</cmd>
+	</record>
+	<record recName="Melee leaves no scorches"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>The sets the melee action not to leave bullet holes.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>melee noscorch</cmd>
+	</record>
+	<record recName="Scorch type"> 
+		<type>int</type>
+		<default>0</default>
+		<enabled>true</enabled>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>This defines the scorch mark made by the weapon's bullets on the segments. The number refers to the image below, but the scorch mark can be further customised by replacing the bulletholes.dds image within the bulletholes folder.
+		By default, 0-2 are pistol/rifle, 3-4 are shotgun, 5-7 are explosions, 8-11 are blood, 12-15 are specific by material.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>scorchtype</cmd>
+	</record>
+	
+</tab>
+<tab tabName="Muzzleflash">
+	<record recName="Muzzleflash type"> 
+		<type>int</type>
+		<default>1</default>
+		<minvalue>1</minvalue>
+		<maxvalue>7</maxvalue>
+		<comment>Type of pre-defined muzzleflash, where:
+		1 is 6-star,
+		2 is 8-star,
+		3 is 5-star,
+		4 is fire cloud,
+		5 is green fire cloud,
+		6 is light shaffle,
+		7 is big fire cloud</comment>
+		<hasAlt>true</hasAlt>
+		<persistent>true</persistent>
+		<cmd>muzzleflash</cmd>
+	</record>
+	<record recName="Muzzleflash size"> 
+		<type>int</type>
+		<default>200</default>
+		<minvalue>1</minvalue>
+		<maxvalue>1000</maxvalue>
+		<comment>This defines the size of the muzzle flash decal</comment>
+		<hasAlt>true</hasAlt>
+		<persistent>true</persistent>
+		<cmd>muzzlesize</cmd>
+	</record>
+	<record recName="Muzzleflash at enemy's hands"> 
+		<type>text</type>
+		<default>Any valid decal name</default>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<comment>This defines the decal that will show up in front of the weapon when the weapon is used by a character (i.e. it will NOT show up when the player fires the weapon)</comment>
+		<cmd>decal</cmd>
+	</record>
+	<record recName="Muzzleflash X position"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>This aligns the muzzle flash along the horizontal axis. Positive values move the muzzle flash right.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>alignx</cmd>
+	</record>
+	<record recName="Muzzleflash Y position"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>This aligns the muzzle flash along the vertical axis. Positive values move the muzzle flash up.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>aligny</cmd>
+	</record>
+	<record recName="Muzzleflash Z position"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>This aligns the muzzle flash along the weapons axis (in/out of the screen). Positive values move the muzzle flash away from the player.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>alignz</cmd>
+	</record>
+	<record recName="Muzzle light R"> 
+		<type>int</type>
+		<default>255</default>
+		<minvalue>0</minvalue>
+		<maxvalue>255</maxvalue>
+		<comment>This sets the amount of red emitted from the muzzle flash spot light. If all three muzzle colour components (red, green and blue) are set to zero, the red component will be set to 255</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>true</enabled>
+		<cmd>muzzlecolorr</cmd>
+	</record>
+	<record recName="Muzzle light G"> 
+		<type>int</type>
+		<default>255</default>
+		<minvalue>0</minvalue>
+		<maxvalue>255</maxvalue>
+		<comment>This sets the amount of green emitted from the muzzle flash spot light. If all three muzzle colour components (red, green and blue) are set to zero, the green component will be set to 255</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>true</enabled>
+		<cmd>muzzlecolorg</cmd>
+	</record>
+	<record recName="Muzzle light B"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>0</minvalue>
+		<maxvalue>255</maxvalue>
+		<comment>This sets the amount of blue emitted from the muzzle flash spot light. If all three muzzle colour components (red, green and blue) are set to zero, the blue component will be set to 0</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>true</enabled>
+		<cmd>muzzlecolorb</cmd>
+	</record>
+	<record recName="Move muzzleflash with zoom"> 
+		<type>bool</type>
+		<default>1</default>
+		<comment>If set to false the muzzleflash will not use the zoom alignment coordinates.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>simplezoomflash</cmd>
+	</record>
+	<record recName="Muzzleflash X position (zoomed)"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>This aligns the muzzle flash along the horizontal axis when in zoom. Positive values move the muzzle flash right.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>zoomalignx</cmd>
+	</record>
+	<record recName="Muzzleflash Y position (zoomed)"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>This aligns the muzzle flash along the vertical axis when in zoom. Positive values move the muzzle flash up.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>zoomaligny</cmd>
+	</record>
+	<record recName="Muzzleflash Z position (zoomed)"> 
+		<type>int</type>
+		<default>0</default>
+		<minvalue>-100</minvalue>
+		<maxvalue>100</maxvalue>
+		<comment>This aligns the muzzle flash along the weapons axis (in/out of the screen) when in zoom. Positive values move the muzzle flash away from the player.</comment>
+		<hasAlt>true</hasAlt>
+		<enabled>false</enabled>
+		<cmd>zoomalignz</cmd>
+	</record>
+</tab>
+<tab tabName="Animations (Generic)">
+	<record recName="Animation speed"> 
+		<type>int</type>
+		<default>16</default>
+		<minvalue>0</minvalue>
+		<maxvalue>1000</maxvalue>
+		<enabled>true</enabled>
+		<comment>This defines the speed of the animations (keyframe ratio).</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>keyframe ratio</cmd>
+	</record>
+	<record recName="Idle"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>true</enabled>
+		<comment>This defines the animation frames for when the weapon is idle.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>idle</cmd>
+	</record>
+	<record recName="Move"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>true</enabled>
+		<comment>This defines the animation frames for when the player is walking.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>move</cmd>
+	</record>
+	<record recName="Run"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>true</enabled>
+		<comment>This defines the animation frames for when the player is running. If no run animation frames are provided, the gun will use the move animation frames.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>run</cmd>
+	</record>
+	<record recName="Select"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>true</enabled>
+		<comment>This defines the animation frames for when the player selects the weapon.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>select</cmd>
+	</record>
+	<record recName="Put Away"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>true</enabled>
+		<comment> This defines the animation frames for when the weapon is put away or hidden.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>putaway</cmd>
+	</record>
+	<record recName="AltFire -> Normal Fire"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames from alternative fire mode to normal fire mode</comment>
+		<cmd>alt from</cmd>
+	</record>
+	<record recName="Normal Fire -> AltFire"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames from normal fire mode to alternative fire mode</comment>
+		<cmd>alt to</cmd>
+	</record>
+	<record recName="Change firemode (ammo type)"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the weapon changes firemode between normal and alternative ammo</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>change firemode</cmd>
+	</record>
+	<record recName="Jammed"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the weapon jams while being fired</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>jammed</cmd>
+	</record>
+	<record recName="Fix jam"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the weapon jam is being cleared.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>fix jam</cmd>
+	</record>
+	<record recName="Press button with free hand"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the unarmed hand is pressing a button.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>hand button</cmd>
+	</record>
+	<record recName="At death"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the unarmed hand (or the player) dies.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>hand dead</cmd>
+	</record>
+	<record recName="Pushing something"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the unarmed hand is pushing.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>hand push</cmd>
+	</record>
+	<record recName="Taking something"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the unarmed hand is taking something.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>hand take</cmd>
+	</record>	
+	<record recName="Using equipment"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the player is using the weapon (when it is defined as an equipment)</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>use</cmd>
+	</record>	
+</tab>
+<tab tabName="Animations (Fire 'n reload)">
+	<record recName="Fire"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>true</enabled>
+		<comment>This defines the animation frames for when the weapon is firing.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>fire</cmd>
+	</record>
+	<record recName="Reload"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>true</enabled>
+		<comment> This defines the animation frames for when the weapon is reloading.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>reload</cmd>
+	</record>
+	<record recName="Automatic fire"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames when the gun is automatically firing</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>automatic fire</cmd>
+	</record>
+	<record recName="Cocked"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the gun is being cocked. If no cock animation frames are provided, the gun will use the reload animation frames.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>cock</cmd>
+	</record>
+	<record recName="Start fire"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the player is firing the weapon. Up to three start fire animations can be defined for normal and alternative fire modes. The engine randomly picks which fire animation to use.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>start fire</cmd>
+	</record>
+	<record recName="Start fire 2"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the player is firing the weapon. Up to three start fire animations can be defined for normal and alternative fire modes. The engine randomly picks which fire animation to use.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>start fire 2</cmd>
+	</record>
+	<record recName="Start fire 3"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the player is firing the weapon. Up to three start fire animations can be defined for normal and alternative fire modes. The engine randomly picks which fire animation to use.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>start fire 3</cmd>
+	</record>
+	<record recName="End fire"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the weapon has finished firing.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>end fire</cmd>
+	</record>
+	<record recName="End fire 2"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the weapon has finished firing.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>end fire 2</cmd>
+	</record>
+	<record recName="End fire 3"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the weapon has finished firing.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>end fire 3</cmd>
+	</record>
+	<record recName="Start reload"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>n: This defines the animation frames for when the player is reloading the weapon.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>start reload</cmd>
+	</record>
+	<record recName="Reload loop"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for the weapon's reloading loop.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>reload loop</cmd>
+	</record>
+	<record recName="End reload"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the weapon has finished reloading.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>end reload</cmd>
+	</record>
+</tab>
+<tab tabName="Animations (empty)">
+	<record recName="Use empty animations"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>This defines the weapon to use the empty animations when out of bullets.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>useempty</cmd>
+	</record>
+	<record recName="Use empty with shotgun-type animations"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>This defines the weapons to use both empty and shotgun type animations.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty shotgun</cmd>
+	</record>
+	<record recName="Empty idle"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the gun is idle and it has no ammo. If no empty idle animation frames are provided, the gun will use the normal idle animation frames</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty idle</cmd>
+	</record>
+	<record recName="Empty move"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the player is walking with the gun and the gun has no ammo. If no empty move animation frames are provided, the gun will use the normal move animation frames</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty move</cmd>
+	</record>
+	<record recName="Empty run"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the player is running with the gun and it has no ammo. If no empty run animation frames are provided, the gun will use the empty move animation frames</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty run</cmd>
+	</record>
+	<record recName="Empty select"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the gun is being selected and it has no ammo.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty select</cmd>
+	</record>
+	<record recName="Empty putaway"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the gun is being hidden or put away and it has no ammo. If no empty put away animation frames are provided, the gun will use the normal put away animation frames</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty move</cmd>
+	</record>
+	<record recName="Empty cocked"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the gun is being cocked and it has no ammo. If no empty cock animation frames are provided, the gun will use the normal cock animation frames.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty cock</cmd>
+	</record>
+	<record recName="Empty reload"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the gun is being reloaded and it has no ammo.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty reload</cmd>
+	</record>
+	<record recName="Empty start reload"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the start animation frames for when the gun is being reloaded and it has no ammo. If no empty start reload animation frames are provided, the gun will use the normal start reload animation frames.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty start reload</cmd>
+	</record>
+	<record recName="Empty reload loop"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for the reload loop when the gun has no ammo. If no empty reload loop animation frames are provided, the gun will use the normal reload loop animation frames.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty reload loop</cmd>
+	</record>
+	<record recName="Empty end reload"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the end animation frames for when the gun is being reloaded and it has no ammo. If no empty end reload animation frames are provided, the gun will use the normal end reload animation frames.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty end reload</cmd>
+	</record>
+</tab>
+<tab tabName="Animations (zoom)">
+	<record recName="Animate zoom"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>false</enabled>
+		<comment>If set to true the weapon will use the zoom animation set when in ironsights.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>simplezoomanim</cmd>
+	</record>
+	<record recName="Zoom in"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames to be played when the gun is moving into ironsights mode</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoomto</cmd>
+	</record>
+	<record recName="Zoom out"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames to be played when the gun is moving out of ironsights mode</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoomfrom</cmd>
+	</record>
+	<record recName="Idle (zoom)"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the gun is idle and it is in zoom mode.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoom idle</cmd>
+	</record>
+	<record recName="Move (zoom)"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the player is walking with the gun and it is in zoom mode</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoom move</cmd>
+	</record>
+		<record recName="Automatic fire (zoom)"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the gun is being automatically fired and it is in zoom mode</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoom automatic fire</cmd>
+	</record>
+	<record recName="Start fire (zoom)"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the start animation frames for when the gun is being fired and it is in zoom mode</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoom start fire</cmd>
+	</record>
+	<record recName="End fire (zoom)"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the end animation frames for when the gun is being fired and it is in zoom mode.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>zoom end fire</cmd>
+	</record>
+</tab>
+<tab tabName="Animations (melee)">
+	<record recName="Block"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frames for when the player is performing the block action whilst holding the gun.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>block</cmd>
+	</record>
+	<record recName="Melee start"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the start animation frames for when the player is performing the melee action whilst holding the gun</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>melee start</cmd>
+	</record>
+	<record recName="Melee end"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the end animation frames for when the player is performing the melee action whilst holding the gun</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>melee end</cmd>
+	</record>
+	<record recName="Empty melee start"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the start animation frames for when the player is performing the melee action whilst holding the gun and the gun has no ammo</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty melee start</cmd>
+	</record>
+	<record recName="Empty melee end"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the end animation frames for when the player is performing the melee action whilst holding the gun and the gun has no ammo</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>empty melee end</cmd>
+	</record>
+</tab>
+<tab tabName="Sounds">
+	<record recName="Fire sound speed"> 
+		<type>int</type>
+		<default>1000</default>
+		<minvalue>1</minvalue>
+		<maxvalue>10000</maxvalue>
+		<persistent>true</persistent>
+		<comment>This defines how quickly the fire sound is looped. Lower values make the sound loop quicker.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>fireloop</cmd>
+	</record>
+	<record recName="Loudness (for AI)"> 
+		<type>int</type>
+		<default>100</default>
+		<minvalue>0</minvalue>
+		<maxvalue>100</maxvalue>
+		<enabled>false</enabled>
+		<comment>The percentage of sound the player‟s weapon will make in the AI system. A value of 0 means it will make no sound, while 100 would be normal.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>soundstrength</cmd>
+	</record>
+	<record recName="Fire sound 1"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>true</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>sound1</cmd>
+	</record>
+	<record recName="Fire sound 2"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>sound2</cmd>
+	</record>
+	<record recName="Fire sound 3"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>sound3</cmd>
+	</record>
+	<record recName="Fire sound 4"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>true</hasAlt>
+		<cmd>sound4</cmd>
+	</record>
+	<record recName="Fire sound 5"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sound5</cmd>
+	</record>
+	<record recName="Fire sound 6"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sound6</cmd>
+	</record>
+	<record recName="Fire sound 7"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sound7</cmd>
+	</record>
+	<record recName="Fire sound 8"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sound8</cmd>
+	</record>
+	<record recName="Fire sound 9"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sound9</cmd>
+	</record>
+	<record recName="Fire sound 10"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sound10</cmd>
+	</record>
+	<record recName="Fire sound 11"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sound11</cmd>
+	</record>
+	<record recName="Fire sound 12"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sound12</cmd>
+	</record>
+	<record recName="Fire sound 13"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sound13</cmd>
+	</record>
+	<record recName="Fire sound 14"> 
+		<type>text</type>
+		<default>File name</default>
+		<enabled>false</enabled>
+		<comment>This defines the sound to be used by the gun. The sounds are triggered by using the Sound Frame # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sound14</cmd>
+	</record>
+	<record recName="Sound Frames Count"> 
+		<type>int</type>
+		<default>1</default>
+		<minvalue>1</minvalue>
+		<maxvalue>10000</maxvalue>
+		<persistent>true</persistent>
+		<comment>Number of used sounds (in main fire mode).</comment>
+		<cmd>soundframes</cmd>
+	</record>
+	<record recName="Sound Frame 0"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>true</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe0</cmd>
+	</record>
+	<record recName="Sound Frame 1"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>true</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe1</cmd>
+	</record>
+	<record recName="Sound Frame 2"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe2</cmd>
+	</record>
+	<record recName="Sound Frame 3"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe3</cmd>
+	</record>
+	<record recName="Sound Frame 4"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe4</cmd>
+	</record>
+	<record recName="Sound Frame 5"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe5</cmd>
+	</record>
+	<record recName="Sound Frame 6"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe6</cmd>
+	</record>
+	<record recName="Sound Frame 7"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe7</cmd>
+	</record>
+	<record recName="Sound Frame 8"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe8</cmd>
+	</record>
+	<record recName="Sound Frame 9"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe9</cmd>
+	</record>
+	<record recName="Sound Frame 10"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe10</cmd>
+	</record>
+	<record recName="Sound Frame 11"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe11</cmd>
+	</record>
+	<record recName="Sound Frame 12"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe12</cmd>
+	</record>
+	<record recName="Sound Frame 13"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe13</cmd>
+	</record>
+	<record recName="Sound Frame 14"> 
+		<type>text</type>
+		<default>x,y</default>
+		<enabled>false</enabled>
+		<comment>This defines the animation frame at which to play the specified sound file. The sound files are defined using the Fire Sound # command.</comment>
+		<hasAlt>false</hasAlt>
+		<cmd>sframe14</cmd>
+	</record>
+</tab>
+</root>
