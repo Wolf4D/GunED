@@ -7,7 +7,7 @@ This is a small tool for FPS Creator (by TheGameCreators) users which allows the
 FPSC is a great engine, but it lacks lots of simple instruments. After fiddling with gunspec files for a couple of days, I realized that manually editing it is a vicked task. There are a bunch of commands with ill-remembered names, and for any refinement you need to flip through a thick reference book. So I made my own tool.
 
 ## How to use it?
-There is an editor that allows you to **load existing** or** create new** gunspec files. 
+There is an editor that allows you to **load existing** or **create new** gunspec files. 
 
 ![Application interface](preview.png "Application interface")
 
@@ -41,4 +41,4 @@ There is an editor that allows you to **load existing** or** create new** gunspe
 - There are tons of bugs, so backup your gunspec files before overwriting *(therefore, nothing should be damaged when reading)*. 
 - Yes, and the "Save" button does not work yet, just use "Save as".
 
-###Good luck, have fun!
+**Good luck, have fun!**
