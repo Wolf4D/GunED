@@ -104,9 +104,6 @@
    </property>
   </action>
   <action name="action_saveGun">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Save gun</string>
    </property>

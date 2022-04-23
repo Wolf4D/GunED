@@ -7,6 +7,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QTextEdit>
+#include <QCloseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,29 +21,33 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void makeTabs(bool hasAlt);
+    void on_action_saveGun_triggered();
     void on_action_saveGunAs_triggered();
     void on_action_loadGun_triggered();
     void setDocumentModified(bool state = true);
     void on_actionAbout_triggered();
     void on_action_newGun_triggered();
 
-
 private:
     bool maybeSave();
-    bool saveFile(const QString &fileName);
-    void setCurrentFile(const QString &fileName);
+    bool saveFile();
+    bool saveAs();
+    void setCurrentFile(QString fileName);
 
-    bool wasModified = false;
+    QString collectFileText();
+    bool writeFile(QString fileName, QString fileContent);
+
     QFile * currentFile = new QFile();
-    QString currentFileName = "New gunspec";
+    QString currentFileName = "";
     QTextStream dataStream;
     QTextEdit * miscTextEdit = nullptr;
 
-    QString filename;
     Ui::MainWindow *ui;
-    GunspecXMLReader * xmlReader = nullptr;
     QMultiMap<QString, PropertyWidget*> fields; // имя вкладки - поля
 };
 #endif // MAINWINDOW_H

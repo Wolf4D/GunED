@@ -1,5 +1,5 @@
 #include "propertywidget.h"
-
+#include <QStyle>
 
 PropertyWidget::PropertyWidget(QWidget *parent, PropertyField field) :
     QFrame(parent), propertyField(field)
@@ -80,7 +80,8 @@ PropertyWidget::PropertyWidget(QWidget *parent, PropertyField field) :
 
 
     button = new QPushButton(this);
-    button->setText("X");
+    //button->setText("X");
+    button->setIcon(style()->standardIcon(QStyle::SP_DialogApplyButton));
     button->setMaximumWidth(30);
     button->setCheckable(true);
 
@@ -89,6 +90,7 @@ PropertyWidget::PropertyWidget(QWidget *parent, PropertyField field) :
     if (!field.enabled)
     {
         button->setChecked(true);
+        button->setIcon(style()->standardIcon(QStyle::SP_DialogCancelButton));
         this->pressed(true);
     }
 
@@ -113,6 +115,12 @@ void PropertyWidget::pressed(bool state)
     if (spin) spin->setEnabled(!state);
     if (label) label->setEnabled(!state);
     if (edit) edit->setEnabled(!state);
+
+    if (state)
+        button->setIcon(style()->standardIcon(QStyle::SP_DialogCancelButton));
+    else
+        button->setIcon(style()->standardIcon(QStyle::SP_DialogApplyButton));
+
 }
 
 PropertyField PropertyWidget::getPropertyField()

@@ -14,6 +14,8 @@
 #include <QTextEdit>
 #include "gunspecreader.h"
 
+///////////////////////////////////////////////////////////////////////////////
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -23,26 +25,29 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->checkBox, SIGNAL(toggled(bool)), this, SLOT(makeTabs(bool)));
 
-    //setWindowTitle("[*] - " + this->windowTitle()+ " v." + QString(VER));
-
     setCurrentFile("");
     statusBar()->showMessage(tr("Ready"));
 }
+
+///////////////////////////////////////////////////////////////////////////////
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
 void MainWindow::makeTabs(bool hasAlt)
 {
     fields.clear();
 
-    ui->tabWidget->hide();
+    ui->tabWidget->setEnabled(false);
     QApplication::processEvents();
+    ui->tabWidget->hide();
     ui->tabWidget->clear();
 
-    xmlReader = new GunspecXMLReader(this);
+    GunspecXMLReader * xmlReader = new GunspecXMLReader(this);
     xmlReader->readXML("");
 
     int tabCount = 0;
@@ -107,11 +112,142 @@ void MainWindow::makeTabs(bool hasAlt)
 
     ui->tabWidget->show();
 
+    xmlReader->deleteLater();
+    ui->tabWidget->setEnabled(true);
+
 }
 
-void MainWindow::on_action_saveGunAs_triggered()
+///////////////////////////////////////////////////////////////////////////////
+
+bool MainWindow::maybeSave()
 {
-    QString fileContent = ";FPSC weapon gunspec\n;Made using GunED v0.1.\n\n";
+    if (isWindowModified()) {
+        QMessageBox::StandardButton ret;
+        ret = QMessageBox::warning(this, tr("GunED"),
+                                   tr("The document has been modified.\n"
+                                      "Do you want to save your changes?"),
+                                   QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        if (ret == QMessageBox::Save)
+        {
+            if (!currentFileName.isEmpty())
+                return saveFile();
+            else
+                return saveAs();
+        }
+        else if (ret == QMessageBox::Cancel)
+            return false;
+    }
+    return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+bool MainWindow::saveFile()
+{
+    QString fileContent = collectFileText();
+
+    setCurrentFile(currentFileName);
+
+    return writeFile(currentFileName, fileContent);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+bool MainWindow::saveAs()
+{
+    QFileDialog fileDialog(0, "Save gunspec file",  ".",  "gunspec.txt (*.txt)");
+    fileDialog.setAcceptMode(QFileDialog::AcceptSave);
+
+    if (!fileDialog.exec()) return false;
+    if (fileDialog.selectedFiles().empty()) return false;
+
+    currentFileName = fileDialog.selectedFiles().at(0);
+
+    return saveFile();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+void MainWindow::on_action_loadGun_triggered()
+{
+    if (maybeSave())
+    {
+        QString fileName = QFileDialog::getOpenFileName(0,
+                                                        "Open gunspec file", ".",
+                                                        "gunspec.txt (*.txt)");
+        if (fileName.isEmpty()) return;
+
+        currentFile->setFileName(fileName);
+        currentFile->open(QIODevice::ReadOnly | QIODevice::Text);
+        dataStream.setDevice(currentFile);
+
+        QString line = dataStream.readAll();
+
+        if (dataStream.status()!= QTextStream::Ok)
+        {
+            QMessageBox::critical(0,"Error", "File not ok!");
+            return;
+        }
+
+        setCurrentFile(fileName);
+
+        // Определим, есть ли альтернативный режим
+        if (line.contains("alt"))
+        {
+            ui->checkBox->setChecked(true);
+            makeTabs(true);
+        }
+        else
+        {
+            ui->checkBox->setChecked(false);
+            makeTabs(false);
+        }
+
+        QList<PropertyWidget*> widgets = fields.values();
+        GunspecReader reader;
+        QString unparsed;
+        reader.readGunspec(line, widgets, unparsed);
+
+        if (miscTextEdit!=nullptr)
+            miscTextEdit->setText(unparsed);
+
+        setDocumentModified(false);
+    }
+
+    statusBar()->showMessage(tr("File was loaded"));
+
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+void MainWindow::on_action_saveGun_triggered()
+{
+    if (currentFileName.isEmpty()) {
+        on_action_saveGunAs_triggered();
+    } else {
+        saveFile();
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+void MainWindow::setCurrentFile(QString fileName)
+{
+    currentFileName = fileName;
+
+    if (currentFileName.isEmpty())
+        fileName = "untitled.txt";
+
+    setWindowFilePath(currentFileName);
+    setWindowTitle(fileName + "[*] - " + "FPSC Gun Editor (by Navy LiK), "+ " v." + QString(VER));
+    setDocumentModified(false);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+QString MainWindow::collectFileText()
+{
+    QString fileContent = ";FPSC weapon gunspec\n;Made using GunED v. " +QString(VER) + "\n\n";
 
     QList<QString> keys = fields.keys().toSet().toList();
     qSort(keys);
@@ -133,8 +269,8 @@ void MainWindow::on_action_saveGunAs_triggered()
         if (fieldsCount>0)
         {
             tabContent.prepend("\n;GUN " + QString(tabName).remove(0,1).toLower() + " settings\n\n");
-            std::cout << tabContent.toStdString() << std::endl;
-            std::flush(std::cout);
+            //std::cout << tabContent.toStdString() << std::endl;
+            //std::flush(std::cout);
 
             fileContent +=  tabContent;
         }
@@ -143,21 +279,13 @@ void MainWindow::on_action_saveGunAs_triggered()
     if (miscTextEdit!=nullptr)
         fileContent.append(miscTextEdit->toPlainText());
 
+    return fileContent;
+}
 
+///////////////////////////////////////////////////////////////////////////////
 
-    QFileDialog fileDialog(0, "Save gunspec file",  ".",  "TXT (*.txt)");
-    fileDialog.setAcceptMode(QFileDialog::AcceptSave);
-
-    if (!fileDialog.exec()) return;
-    if (fileDialog.selectedFiles().empty()) return;
-
-    currentFileName = fileDialog.selectedFiles().at(0);
-
-
-
-
-    QString fileName = currentFileName; //"D:/Pro/GunED/gunspectest.txt";
-
+bool MainWindow::writeFile(QString fileName, QString fileContent)
+{
     if (!fileName.isEmpty())
     {
         currentFile->setFileName(fileName);
@@ -183,120 +311,56 @@ void MainWindow::on_action_saveGunAs_triggered()
         setCurrentFile(currentFileName);
     }
 
+    return true;
 }
 
-void MainWindow::on_action_loadGun_triggered()
+///////////////////////////////////////////////////////////////////////////////
+
+void MainWindow::on_actionAbout_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(0,
-                                                    "gunspec.txt", ".",
-                                                    "TXT (*.txt)");
-    if (fileName.isEmpty()) return;
-
-    currentFile->setFileName(fileName);
-    currentFile->open(QIODevice::ReadOnly | QIODevice::Text);
-    dataStream.setDevice(currentFile);
-
-    QString line = dataStream.readAll();
-
-    if (dataStream.status()!= QTextStream::Ok)
-    {
-        QMessageBox::critical(0,"Error", "File not ok!");
-        return;
-    }
-
-    setCurrentFile(fileName);
-
-    // Определим, есть ли альтернативный режим
-    if (line.contains("alt"))
-    {
-        ui->checkBox->setChecked(true);
-        makeTabs(true);
-    }
-    else
-    {
-        ui->checkBox->setChecked(false);
-        makeTabs(false);
-    }
-
-
-    QList<PropertyWidget*> widgets = fields.values();
-    GunspecReader reader;
-    QString unparsed;
-    reader.readGunspec(line, widgets, unparsed);
-
-    if (miscTextEdit!=nullptr)
-        miscTextEdit->setText(unparsed);
-
-    setDocumentModified(false);
-
+    QMessageBox::about(this, tr("About GunED"),
+                       QString("FPS Creator Gun Editor by NavY LiK (aka Ivan Klenov).\nWolf4D@list.ru")
+                       + "\nCurrent version: " + QString(VER) +
+                       "\nBuild date: " + QString(__DATE__) +
+                       " at " + QString(__TIME__));
 }
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+void MainWindow::on_action_saveGunAs_triggered()
+{
+    saveAs();
+}
+
+///////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::setDocumentModified(bool state)
 {
     setWindowModified(state);
-    wasModified = state;
 }
 
-bool MainWindow::maybeSave()
-{
-    if (wasModified) {
-        QMessageBox::StandardButton ret;
-        ret = QMessageBox::warning(this, tr("GunED"),
-                     tr("The document has been modified.\n"
-                        "Do you want to save your changes?"),
-                     QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-        if (ret == QMessageBox::Save)
-            return true;//save();
-        else if (ret == QMessageBox::Cancel)
-            return false;
-    }
-    return true;
-}
-
-
-bool MainWindow::saveFile(const QString &fileName)
-//! [44] //! [45]
-{
-    QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Application"),
-                             tr("Cannot write file %1:\n%2.")
-                             .arg(fileName)
-                             .arg(file.errorString()));
-        return false;
-    }
-
-    QTextStream out(&file);
-
-    setCurrentFile(fileName);
-    statusBar()->showMessage(tr("File saved"), 2000);
-    return true;
-}
-
-
-void MainWindow::setCurrentFile(const QString &fileName)
-{
-    currentFileName = fileName;
-
-    if (currentFileName.isEmpty())
-        currentFileName = "untitled.txt";
-
-    setWindowFilePath(currentFileName);
-    setWindowTitle(currentFileName + "[*] - " + "FPSC Gun Editor (by Navy LiK), "+ " v." + QString(VER));
-    setDocumentModified(false);
-}
-
-void MainWindow::on_actionAbout_triggered()
-{
-   QMessageBox::about(this, tr("About GunED"),
-            QString("FPS Creator Gun Editor by NavY LiK (aka Ivan Klenov).\nWolf4D@list.ru")
-                      + "\nCurrent version: " + QString(VER) +
-                      "\nBuild date: " + QString(__DATE__) +
-                      " at " + QString(__TIME__));
-}
+///////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::on_action_newGun_triggered()
 {
-    currentFileName = "untitled.txt";
-    makeTabs(ui->checkBox->isChecked());
+    if (maybeSave())
+    {
+        setCurrentFile("");
+        makeTabs(ui->checkBox->isChecked());
+        ui->statusbar->showMessage("Ready");
+    }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (maybeSave()) {
+        event->accept();
+    } else {
+        event->ignore();
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
