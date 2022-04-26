@@ -13,7 +13,7 @@ GunspecXMLReader::GunspecXMLReader(QObject *parent) : QObject(parent)
 
 bool GunspecXMLReader::readXML(QString cfile)
 {
-    QFile * file = new QFile("./gunspec.xml");
+    QFile * file = new QFile(cfile);
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QMessageBox::critical( QApplication::desktop()->screen(), "GunED error!", "No gunspec.xml file provided!\nLooks like your installation is broken!");

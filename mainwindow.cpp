@@ -48,7 +48,7 @@ void MainWindow::makeTabs(bool hasAlt)
     ui->tabWidget->clear();
 
     GunspecXMLReader * xmlReader = new GunspecXMLReader(this);
-    xmlReader->readXML("");
+    xmlReader->readXML(QCoreApplication::applicationDirPath() + "/gunspec.xml");
 
     int tabCount = 0;
     foreach (TabStruct tab, xmlReader->tabs)
