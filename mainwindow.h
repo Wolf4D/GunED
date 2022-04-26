@@ -24,8 +24,11 @@ public:
 protected:
     void closeEvent(QCloseEvent *event);
 
-private slots:
+public slots:
+    bool loadFile(QString fileName);
     void makeTabs(bool hasAlt);
+
+private slots:
     void on_action_saveGun_triggered();
     void on_action_saveGunAs_triggered();
     void on_action_loadGun_triggered();
@@ -40,6 +43,7 @@ private:
     void setCurrentFile(QString fileName);
 
     QString collectFileText();
+
     bool writeFile(QString fileName, QString fileContent);
 
     QFile * currentFile = new QFile();
