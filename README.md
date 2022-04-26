@@ -21,14 +21,21 @@ There is an editor that allows you to **load existing** or **create new** gunspe
 
 ## TODO list:
 - Make app to find and remember current FPSC installation folder.
+- "Last opened" list.
+- Add drag & drop.
 - Make alt-mode switching less painful.
 - Make simple help system.
-- Allow app to recive command line arguments (for future integration with FPS Editor).
 - Clean the code.
 - Make an installer.
 - Make some localizations.
 
 ## Changelog
+###### v.0.2.5. Bugfixes and small features
+- Fixed small bugs in programm interface after saving and loading files.
+- Added beautiful progress indicators.
+- Added command line arguments parser. Now you may open file with GunED from CMD or any app, or by just dropping gunspec.txt to GunED's link (drag and drop inside the windows is still not done).
+- Made some improvements of the source code.
+
 ###### v.0.2.0. More stable release
 - Fixed "Save" menu option.
 - Fixed some of save file / new file problems.
