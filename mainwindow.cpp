@@ -228,7 +228,12 @@ QString MainWindow::collectFileText()
             PropertyField propertyField = widget->getPropertyField();
             if (propertyField.enabled)
             {
-                tabContent.prepend(propertyField.cmd + " = " + propertyField.currentValue.toString() + "\n");
+                QString currentValue;
+                if (propertyField.currentValue.type() == QVariant::Bool)
+                    currentValue = QString::number(propertyField.currentValue.toInt());
+                else
+                    currentValue = propertyField.currentValue.toString();
+                tabContent.prepend(propertyField.cmd + " = " + currentValue + "\n");
                 fieldsCount++;
             }
         }
