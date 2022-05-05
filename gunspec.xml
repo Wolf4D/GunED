@@ -974,7 +974,7 @@ NOTE: If Chambered Round = true, they will still be able to reload with full amm
 	<record recName="Ignore speed parameter"> 
 		<type>bool</type>
 		<default>false</default>
-		<enabled>ralse</enabled>
+		<enabled>false</enabled>
 		<comment>If set to true, will disable the animation speed change applied to the move animation while walking/running/crouching.</comment>
 		<cmd>disablemovespeedmod</cmd>
 	</record>
