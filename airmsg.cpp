@@ -18,7 +18,7 @@ void airMsg(QString text, QColor color, bool addDelay)
     // Finding parent for our button
     QWidget * parent = QApplication::activeWindow();
 
-    if (parent!=NULL)
+    if (parent!=nullptr)
         pushButton = new QPushButton( parent );
     else
     {

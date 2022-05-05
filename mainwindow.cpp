@@ -12,6 +12,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextEdit>
+#include <QMimeData>
+#include <QStyle>
 #include "gunspecreader.h"
 #include "airmsg.h"
 #include "windows.h"
@@ -25,6 +27,25 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->checkBox, SIGNAL(toggled(bool)), this, SLOT(makeTabs(bool)));
 
+    ui->action_newGun->setIcon(style()->standardIcon(QStyle::SP_FileIcon));
+    ui->action_newGun->setShortcuts(QKeySequence::New);
+
+    ui->action_loadGun->setIcon(style()->standardIcon(QStyle::SP_DialogOpenButton));
+    ui->action_loadGun->setShortcuts(QKeySequence::Open);
+
+    ui->action_saveGun->setIcon(style()->standardIcon(QStyle::SP_DialogSaveButton));
+    ui->action_saveGun->setShortcuts(QKeySequence::Save);
+
+    ui->action_saveGunAs->setIcon(style()->standardIcon(QStyle::SP_DriveFDIcon));
+    ui->action_saveGunAs->setShortcuts(QKeySequence::SaveAs);
+
+    ui->actionExit->setIcon(style()->standardIcon(QStyle::SP_DialogCancelButton));
+    ui->actionExit->setShortcuts(QKeySequence::Quit);
+
+    ui->actionAbout->setIcon(style()->standardIcon(QStyle::SP_DialogHelpButton));
+    ui->actionAbout->setShortcuts(QKeySequence::WhatsThis);
+
+    this->setAcceptDrops(true);
     setCurrentFile("");
     statusBar()->showMessage(tr("Ready"));
 }
@@ -157,7 +178,7 @@ bool MainWindow::saveFile()
 
 bool MainWindow::saveAs()
 {
-    QFileDialog fileDialog(0, "Save gunspec file",  ".",  "gunspec.txt (*.txt)");
+    QFileDialog fileDialog(this, "Save gunspec file",  ".",  "gunspec.txt (*.txt)");
     fileDialog.setAcceptMode(QFileDialog::AcceptSave);
 
     if (!fileDialog.exec()) return false;
@@ -174,15 +195,13 @@ void MainWindow::on_action_loadGun_triggered()
 {
     if (maybeSave())
     {
-        QString fileName = QFileDialog::getOpenFileName(0,
+        QString fileName = QFileDialog::getOpenFileName(this,
                                                         "Open gunspec file", ".",
                                                         "gunspec.txt (*.txt)");
         if (fileName.isEmpty()) return;
 
         if (!loadFile(fileName)) return;
     }
-
-    statusBar()->showMessage(tr("File was loaded"));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -266,7 +285,7 @@ bool MainWindow::writeFile(QString fileName, QString fileContent)
         currentFile->setFileName(fileName);
         currentFile->open(QIODevice::WriteOnly | QIODevice::Text);
         if (!currentFile->isOpen())
-            QMessageBox::critical(0,"Error", "File not avalible!");
+            QMessageBox::critical(this, "Error", "File not avalible!");
 
         dataStream.setDevice(currentFile);
 
@@ -274,7 +293,7 @@ bool MainWindow::writeFile(QString fileName, QString fileContent)
 
         if (dataStream.status()!= QTextStream::Ok)
         {
-            QMessageBox::critical(0,"Error", "File not written!");
+            QMessageBox::critical(this, "Error", "File not written!");
             ui->statusbar->showMessage("File was NOT succesfully saved");
         }
         else
@@ -342,6 +361,36 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasUrls())
+        event->acceptProposedAction();
+}
+
+void MainWindow::dropEvent(QDropEvent *event)
+{
+     const QMimeData *mimeData = event->mimeData();
+
+     if (mimeData->hasUrls())
+     {
+         QString fileName = mimeData->urls().at(0).toLocalFile();
+
+         if (!QFile::exists(fileName))
+         {
+             QMessageBox::critical(this ,"Error", "File can't be opened!");
+             ui->statusbar->showMessage("File was NOT succesfully opened");
+             return;
+         }
+
+         if (maybeSave())
+         {
+             if (fileName.isEmpty()) return;
+             if (!loadFile(fileName)) return;
+         }
+     }
+
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 bool MainWindow::loadFile(QString fileName)
@@ -353,13 +402,20 @@ bool MainWindow::loadFile(QString fileName)
 
     currentFile->setFileName(fileName);
     currentFile->open(QIODevice::ReadOnly | QIODevice::Text);
+
+    if (!currentFile->isOpen())
+    {
+        QMessageBox::critical(this, "Error", "Can't read file " + fileName);
+        return false;
+    }
+
     dataStream.setDevice(currentFile);
 
     QString line = dataStream.readAll();
 
     if (dataStream.status()!= QTextStream::Ok)
     {
-        QMessageBox::critical(0,"Error", "Can't read file " + fileName);
+        QMessageBox::critical(this, "Error", "Can't read file " + fileName);
         return false;
     }
 
@@ -386,6 +442,8 @@ bool MainWindow::loadFile(QString fileName)
         miscTextEdit->setText(unparsed);
 
     setDocumentModified(false);
+
+    statusBar()->showMessage(tr("File was loaded"));
 
     return true;
 }

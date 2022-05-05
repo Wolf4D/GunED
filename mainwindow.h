@@ -23,6 +23,8 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
 
 public slots:
     bool loadFile(QString fileName);

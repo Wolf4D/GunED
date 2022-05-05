@@ -17,12 +17,12 @@ There is an editor that allows you to **load existing** or **create new** gunspe
 - Removed parameter becomes gray, and is marked with ***cross symbol*** instead of ***check***.
 - You may add alt-fire mode to your weapon by selecting "Has alternate fire". This will add a second column to parameters list.
 - The **last tab** is a tab for manual entering any commands you like. When you open a file with some broken or unknown lines, all of them would be listed on that tab.
+- You may open any gunspec.txt by **drag & drop** - just take your file and drop it onto GunED link or inside its window.
 - You may **add any new command** by changing gunspec.xml file without recompiling the app.
 
 ## TODO list:
 - Make app to find and remember current FPSC installation folder.
 - "Last opened" list.
-- Add drag & drop.
 - Make alt-mode switching less painful.
 - Make simple help system.
 - Clean the code.
@@ -30,6 +30,12 @@ There is an editor that allows you to **load existing** or **create new** gunspe
 - Make some localizations.
 
 ## Changelog
+###### v.0.3.5. Drag & Drop
+- Added drag & drop feature - now you can take gunspec.txt and drop it exactly inside the app.
+- Added keyboard shortcuts for some actions (for example, now Ctrl+S is working).
+- Fixed minor bugs and added new commands.
+- Added some nice icons to menus.
+
 ###### v.0.2.5. Bugfixes and small features
 - Fixed small bugs in programm interface after saving and loading files.
 - Added beautiful progress indicators.

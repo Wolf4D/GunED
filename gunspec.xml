@@ -864,8 +864,8 @@ NOTE: If Chambered Round = true, they will still be able to reload with full amm
 	<record recName="Muzzleflash X position"> 
 		<type>int</type>
 		<default>0</default>
-		<minvalue>-100</minvalue>
-		<maxvalue>100</maxvalue>
+		<minvalue>-300</minvalue>
+		<maxvalue>300</maxvalue>
 		<comment>This aligns the muzzle flash along the horizontal axis. Positive values move the muzzle flash right.</comment>
 		<hasAlt>true</hasAlt>
 		<enabled>false</enabled>
@@ -874,8 +874,8 @@ NOTE: If Chambered Round = true, they will still be able to reload with full amm
 	<record recName="Muzzleflash Y position"> 
 		<type>int</type>
 		<default>0</default>
-		<minvalue>-100</minvalue>
-		<maxvalue>100</maxvalue>
+		<minvalue>-300</minvalue>
+		<maxvalue>300</maxvalue>
 		<comment>This aligns the muzzle flash along the vertical axis. Positive values move the muzzle flash up.</comment>
 		<hasAlt>true</hasAlt>
 		<enabled>false</enabled>
@@ -884,8 +884,8 @@ NOTE: If Chambered Round = true, they will still be able to reload with full amm
 	<record recName="Muzzleflash Z position"> 
 		<type>int</type>
 		<default>0</default>
-		<minvalue>-100</minvalue>
-		<maxvalue>100</maxvalue>
+		<minvalue>-300</minvalue>
+		<maxvalue>300</maxvalue>
 		<comment>This aligns the muzzle flash along the weapons axis (in/out of the screen). Positive values move the muzzle flash away from the player.</comment>
 		<hasAlt>true</hasAlt>
 		<enabled>false</enabled>
@@ -970,6 +970,13 @@ NOTE: If Chambered Round = true, they will still be able to reload with full amm
 		<comment>This defines the speed of the animations (keyframe ratio).</comment>
 		<hasAlt>true</hasAlt>
 		<cmd>keyframe ratio</cmd>
+	</record>
+	<record recName="Ignore speed parameter"> 
+		<type>bool</type>
+		<default>false</default>
+		<enabled>ralse</enabled>
+		<comment>If set to true, will disable the animation speed change applied to the move animation while walking/running/crouching.</comment>
+		<cmd>disablemovespeedmod</cmd>
 	</record>
 	<record recName="Idle"> 
 		<type>text</type>

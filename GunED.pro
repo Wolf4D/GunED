@@ -17,7 +17,7 @@ RC_ICONS = icon.ico
 
 #######################
 
-VERSION = 0.2.5.1
+VERSION = 0.3.5
 VERSTR = '\\"$${VERSION}\\"'
 DEFINES += VER=\"$${VERSTR}\"
 
