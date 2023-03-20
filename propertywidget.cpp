@@ -104,9 +104,7 @@ PropertyWidget::PropertyWidget(QWidget *parent, const PropertyField& field) :
 
 }
 
-PropertyWidget::~PropertyWidget()
-{
-}
+PropertyWidget::~PropertyWidget() = default;
 
 void PropertyWidget::pressed(bool state)
 {

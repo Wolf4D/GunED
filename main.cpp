@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     const QStringList& args = parser.positionalArguments();
 
     MainWindow w;
-    if (args.size()>0)
+    if (!args.empty())
         w.loadFile(args.at(0));
     else
     {

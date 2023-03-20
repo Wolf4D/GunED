@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "gunspecxmlreader.h"
-#include <QPushButton>
 #include <QGridLayout>
 #include <QLabel>
 #include <QScrollArea>
@@ -234,8 +233,15 @@ QString MainWindow::collectFileText()
 {
     QString fileContent = ";FPSC weapon gunspec\n;Made using GunED v. " + QString(VER) + "\n\n";
 
+#if QT_VERSION > QT_VERSION_CHECK(5,14,0)
+    auto map = fields.keys();
+    QList<QString> keys = QSet<QString>(map.begin(), map.end()).values();
+    std::sort(keys.begin(), keys.end());
+#else
     QList<QString> keys = fields.keys().toSet().toList();
     qSort(keys);
+#endif
+
     foreach (QString tabName, keys)
     {
         QString tabContent;
@@ -435,7 +441,7 @@ bool MainWindow::loadFile(const QString& fileName)
     QList<PropertyWidget*> widgets = fields.values();
     GunspecReader reader;
     QString unparsed;
-    reader.readGunspec(line, widgets, unparsed);
+    GunspecReader::readGunspec(line, widgets, unparsed);
 
     if (miscTextEdit!=nullptr)
         miscTextEdit->setText(unparsed);
