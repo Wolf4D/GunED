@@ -28,7 +28,7 @@ void airMsg(const QString& text, const QColor& color, bool addDelay)
         pushButton->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     }
 
-    // Required for colored apperance
+    // Required for colored appearance
     pushButton->setStyle(QStyleFactory::create("fusion"));
 
     // Sizes
@@ -41,7 +41,7 @@ void airMsg(const QString& text, const QColor& color, bool addDelay)
     pushButton->setText(text);
     pushButton->setAutoFillBackground(true);
 
-    // Colored apperance
+    // Colored appearance
     QPalette pal = pushButton->palette( );
     pal.setColor( QPalette::Button, color );
     pal.setColor( QPalette::Active, QPalette::Button, color );

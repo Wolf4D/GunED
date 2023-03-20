@@ -232,7 +232,7 @@ void MainWindow::setCurrentFile(QString fileName)
 
 QString MainWindow::collectFileText()
 {
-    QString fileContent = ";FPSC weapon gunspec\n;Made using GunED v. " +QString(VER) + "\n\n";
+    QString fileContent = ";FPSC weapon gunspec\n;Made using GunED v. " + QString(VER) + "\n\n";
 
     QList<QString> keys = fields.keys().toSet().toList();
     qSort(keys);
@@ -284,7 +284,7 @@ bool MainWindow::writeFile(const QString& fileName, const QString& fileContent)
         currentFile->setFileName(fileName);
         currentFile->open(QIODevice::WriteOnly | QIODevice::Text);
         if (!currentFile->isOpen())
-            QMessageBox::critical(this, "Error", "File not avalible!");
+            QMessageBox::critical(this, "Error", "File not available!");
 
         dataStream.setDevice(currentFile);
 
@@ -293,10 +293,10 @@ bool MainWindow::writeFile(const QString& fileName, const QString& fileContent)
         if (dataStream.status()!= QTextStream::Ok)
         {
             QMessageBox::critical(this, "Error", "File not written!");
-            ui->statusbar->showMessage("File was NOT succesfully saved");
+            ui->statusbar->showMessage("File was NOT successfully saved");
         }
         else
-            ui->statusbar->showMessage("File was succesfully saved");
+            ui->statusbar->showMessage("File was successfully saved");
 
         currentFile->close();
 
@@ -377,7 +377,7 @@ void MainWindow::dropEvent(QDropEvent *event)
          if (!QFile::exists(fileName))
          {
              QMessageBox::critical(this ,"Error", "File can't be opened!");
-             ui->statusbar->showMessage("File was NOT succesfully opened");
+             ui->statusbar->showMessage("File was NOT successfully opened");
              return;
          }
 
