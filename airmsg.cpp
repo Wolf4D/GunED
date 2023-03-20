@@ -10,7 +10,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void airMsg(QString text, QColor color, bool addDelay)
+void airMsg(const QString& text, const QColor& color, bool addDelay)
 {
     // This would be our message widget
     QPushButton * pushButton;

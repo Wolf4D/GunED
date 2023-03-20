@@ -1,7 +1,7 @@
 #include "propertywidget.h"
 #include <QStyle>
 
-PropertyWidget::PropertyWidget(QWidget *parent, PropertyField field) :
+PropertyWidget::PropertyWidget(QWidget *parent, const PropertyField& field) :
     QFrame(parent), propertyField(field)
 {
 

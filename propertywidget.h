@@ -17,7 +17,7 @@ class PropertyWidget : public QFrame
     Q_OBJECT
 
 public:
-    explicit PropertyWidget(QWidget *parent, PropertyField field);
+    explicit PropertyWidget(QWidget *parent, const PropertyField& field);
     ~PropertyWidget();
 
     PropertyField getPropertyField();

@@ -9,7 +9,7 @@ class GunspecReader : public QObject
     Q_OBJECT
 public:
     explicit GunspecReader(QObject *parent = nullptr);
-    bool readGunspec(QString cfile, QList<PropertyWidget *> &widgets, QString &unparsed);
+    static bool readGunspec(const QString& cfile, QList<PropertyWidget *> &widgets, QString &unparsed);
 
 signals:
 
