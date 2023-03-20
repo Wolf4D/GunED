@@ -27,7 +27,7 @@ protected:
     void dropEvent(QDropEvent *event);
 
 public slots:
-    bool loadFile(QString fileName);
+    bool loadFile(const QString& fileName);
     void makeTabs(bool hasAlt);
 
 private slots:
@@ -46,7 +46,7 @@ private:
 
     QString collectFileText();
 
-    bool writeFile(QString fileName, QString fileContent);
+    bool writeFile(const QString& fileName, const QString& fileContent);
 
     QFile * currentFile = new QFile();
     QString currentFileName = "";

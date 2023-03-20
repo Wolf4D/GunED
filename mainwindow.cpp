@@ -274,7 +274,7 @@ QString MainWindow::collectFileText()
 
 ///////////////////////////////////////////////////////////////////////////////
 
-bool MainWindow::writeFile(QString fileName, QString fileContent)
+bool MainWindow::writeFile(const QString& fileName, const QString& fileContent)
 {
     if (!fileName.isEmpty())
     {
@@ -392,7 +392,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-bool MainWindow::loadFile(QString fileName)
+bool MainWindow::loadFile(const QString& fileName)
 {
     airMsg("Loading your file\nPlease wait...", QColor(Qt::green));
 

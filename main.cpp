@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     parser.addPositionalArgument("source", QApplication::translate("main", "Source file to open"));
     parser.process(a);
 
-    const QStringList args = parser.positionalArguments();
+    const QStringList& args = parser.positionalArguments();
 
     MainWindow w;
     if (args.size()>0)

@@ -16,7 +16,7 @@
 /// \param color Color of window
 /// \param addDelay Should we keep this message on screen for some time?
 ///
-void airMsg(QString text, QColor color, bool addDelay = false);
+void airMsg(const QString& text, const QColor& color, bool addDelay = false);
 
 #endif // AIRMSG_H
 

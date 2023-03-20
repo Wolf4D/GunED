@@ -5,7 +5,7 @@ GunspecReader::GunspecReader(QObject *parent) : QObject(parent)
 
 }
 
-bool GunspecReader::readGunspec(QString cfile, QList<PropertyWidget *> &widgets, QString &unparsed)
+bool GunspecReader::readGunspec(const QString& cfile, QList<PropertyWidget *> &widgets, QString &unparsed)
 {
     QStringList fileLines = cfile.split('\n');
 
