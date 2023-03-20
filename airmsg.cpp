@@ -6,7 +6,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QStyleFactory>
-#include <windows.h> // for Sleep
+#include <QThread>
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -63,7 +63,7 @@ void airMsg(QString text, QColor color, bool addDelay)
         do {
             // Don't let our app hang
             QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
-            Sleep(uint(10));
+            QThread::msleep(10);
         } while (timer.elapsed() < 200);
     }
 
